@@ -22,14 +22,27 @@ Menu extra for macOS 14+. It lives in the menu bar and does not show a Dock icon
 
 ## Install
 
+Homebrew (macOS 14+):
+
+```bash
+brew tap BadryansahBangsawan/mac-menu-apps
+brew install --cask homoglyph-inspector
+```
+
+Opens as a menu extra (no Dock icon). The cask is ad-hoc signed. If Gatekeeper blocks it:
+
+```bash
+xattr -cr /Applications/HomoglyphInspector.app
+```
+
+Build from source:
+
 ```bash
 git clone https://github.com/BadryansahBangsawan/homoglyph-inspector.git
 cd homoglyph-inspector
 bash package-app.sh
 open dist/HomoglyphInspector.app
 ```
-
-`package-app.sh` builds a release binary, wraps `dist/HomoglyphInspector.app`, and ad-hoc codesigns it (`codesign -s -`). Unsigned is fine for local use.
 
 Enable **Open at Login** from Settings if you want it after reboot.
 
