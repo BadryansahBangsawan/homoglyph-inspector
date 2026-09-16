@@ -1,41 +1,56 @@
+<div align="center">
+
 # Homoglyph Inspector
 
-Inspect clipboard and selections for lookalike letters, zero-width characters, and bidi overrides.
+**Spot lookalike letters, zero-width characters, and bidi overrides in any text.**  
+macOS menu extra — lives in the menu bar, no Dock icon.
 
-Menu extra for macOS 14+. It lives in the menu bar and does not show a Dock icon.
+<br/>
 
-## Features
+[![Latest Release](https://img.shields.io/github/v/release/BadryansahBangsawan/homoglyph-inspector?style=flat-square&color=76B900&label=latest)](https://github.com/BadryansahBangsawan/homoglyph-inspector/releases/latest)
+[![macOS](https://img.shields.io/badge/macOS-14%2B-black?style=flat-square&logo=apple)](https://github.com/BadryansahBangsawan/homoglyph-inspector/releases/latest)
+[![Swift](https://img.shields.io/badge/Swift-5.9%2B-F05138?style=flat-square&logo=swift&logoColor=white)](https://swift.org)
 
-- Watches the clipboard for text changes.
-- Paste field to inspect text without copying.
-- **Copy cleaned** writes a version with homoglyphs replaced and hidden characters stripped.
-- **Copy code point** copies a finding’s `U+XXXX` hex.
-- **Inspect selection** reads the frontmost selection via Accessibility.
-- Caps inspection at 50,000 Unicode scalars.
-- No network.
+<br/>
 
-## Requirements
+</div>
 
-- macOS 14 Sonoma or later
-- Swift 5.9 or later
-- Accessibility only for Inspect selection
+---
 
-## Install
+## Download
 
-Homebrew (macOS 14+):
+| Platform | File |
+|---|---|
+| **macOS** (Apple Silicon & Intel, macOS 14+) | `HomoglyphInspector-*-macos.zip` |
+
+[Go to Releases](https://github.com/BadryansahBangsawan/homoglyph-inspector/releases/latest)
+
+---
+
+## Installation
+
+### Homebrew (recommended)
 
 ```bash
 brew tap BadryansahBangsawan/mac-menu-apps
 brew install --cask homoglyph-inspector
 ```
 
-Opens as a menu extra (no Dock icon). The cask is ad-hoc signed. If Gatekeeper blocks it:
+A **Homoglyph Inspector** icon appears in the menu bar. If Gatekeeper blocks it on first launch:
 
 ```bash
-xattr -cr /Applications/HomoglyphInspector.app
+xattr -cr /Applications/HomoglyphInspector.app && open /Applications/HomoglyphInspector.app
 ```
 
-Build from source:
+Or: right-click the app, Open, then Open again. Still blocked? **System Settings → Privacy & Security → Open Anyway**.
+
+### GitHub Releases
+
+1. Download `HomoglyphInspector-*-macos.zip` from [Releases](https://github.com/BadryansahBangsawan/homoglyph-inspector/releases/latest)
+2. Unzip and drag **HomoglyphInspector** into Applications
+3. On first launch, run the xattr command above if Gatekeeper blocks it
+
+### Build from source
 
 ```bash
 git clone https://github.com/BadryansahBangsawan/homoglyph-inspector.git
@@ -44,35 +59,22 @@ bash package-app.sh
 open dist/HomoglyphInspector.app
 ```
 
-Enable **Open at Login** from Settings if you want it after reboot.
+Requires Xcode Command Line Tools and Swift 5.9+.
 
-## Usage
+---
 
-- Copy text or paste it into the panel.
-- A `раyраl.com`-style fixture (Cyrillic lookalikes plus hidden characters) should list findings.
-- If Accessibility is untrusted, use the Inspect selection CTA to open System Settings.
+## Notes
 
-## Permissions
+– Watches the clipboard automatically; paste into the panel to inspect without copying.
+– Accessibility permission required only for Inspect Selection.
+– Caps inspection at 50,000 Unicode scalars.
+– No network connection — all analysis is local.
 
-- Accessibility is optional and used only for Inspect selection. Deny shows a banner, not a crash.
+---
 
-Denied permissions must not crash the app. You should see a banner and a button to open System Settings.
+<div align="center">
 
-## Privacy
+Made with ♥ for developers who prefer staying in the flow.
 
-No network. Inspected text stays in RAM and the pasteboard; nothing is written under Application Support.
+</div>
 
-Bundle ID: `engineer.badry.homoglyphinspector`.
-
-## Development
-
-```bash
-swift build
-swift build -c release --product HomoglyphInspector
-```
-
-Layout: `Sources/` (SwiftPM executable), `Info.plist`, `Assets/AppIcon.icns`, `package-app.sh`.
-
-## License
-
-[MIT](LICENSE)
