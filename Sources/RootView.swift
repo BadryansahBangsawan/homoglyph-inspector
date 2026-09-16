@@ -6,12 +6,13 @@ struct RootView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: FunTheme.sectionSpacing) {
             Text("Homoglyph Inspector")
                 .font(.headline)
 
             if store.text.isEmpty {
                 Text("Copy text, or paste below.")
+                    .foregroundStyle(.secondary)
             }
 
             TextEditor(text: $store.text)
@@ -20,6 +21,7 @@ struct RootView: View {
                 .onChange(of: store.text) {
                     store.rescan()
                 }
+                .extraRowSurface()
 
             if let capBanner = store.capBanner {
                 Label(capBanner, systemImage: "exclamationmark.triangle.fill")
@@ -38,7 +40,7 @@ struct RootView: View {
 
             if !store.findings.isEmpty {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: FunTheme.innerSpacing) {
                         ForEach(store.findings) { finding in
                             FindingRow(finding: finding)
                         }
@@ -50,10 +52,12 @@ struct RootView: View {
             Button("Copy cleaned") {
                 copyToPasteboard(HomoglyphScan.cleaned(store.text))
             }
+            .buttonStyle(.borderedProminent)
 
             Button("Inspect selection") {
                 store.inspectSelection()
             }
+            .buttonStyle(.bordered)
 
             if let axError = store.axError {
                 Label(axError, systemImage: "exclamationmark.triangle.fill")
@@ -62,16 +66,28 @@ struct RootView: View {
             }
 
             if !store.axTrusted {
-                Button("Open Accessibility Settings") {
-                    AXSupport.openAccessibilitySettings()
-                    store.axTrusted = AXSupport.isTrusted(prompt: false)
+                VStack(alignment: .leading, spacing: FunTheme.innerSpacing) {
+                    Text("If the switch is already on, turn it off and on, then Relaunch.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    HStack {
+                        Button("Open Accessibility Settings") {
+                            AXSupport.openAccessibilitySettings()
+                            store.axTrusted = AXSupport.isTrusted(prompt: false)
+                        }
+                        Button("Relaunch") {
+                            AXSupport.relaunch()
+                        }
+                    }
                 }
             }
+
+            ExtraSettingsFooter()
         }
-        .funPanel()
-        .background(.regularMaterial)
         .animation(reduceMotion ? nil : FunTheme.spring, value: store.findings)
         .animation(reduceMotion ? nil : FunTheme.spring, value: store.text.isEmpty)
+        .funPanel()
         .onAppear {
             store.axTrusted = AXSupport.isTrusted(prompt: false)
         }
@@ -94,6 +110,7 @@ private struct FindingRow: View {
             }
         }
         .padding(.vertical, 6)
+        .extraRowSurface()
     }
 }
 
