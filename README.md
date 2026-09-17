@@ -63,6 +63,17 @@ Requires Xcode Command Line Tools and Swift 5.9+.
 
 ---
 
+## Uninstall
+
+**Homebrew:**
+```bash
+brew uninstall --cask homoglyph-inspector
+```
+
+**Manual:** Drag **HomoglyphInspector.app** from Applications to Trash, then remove the login item in **System Settings → General → Login Items** if it was added.
+
+---
+
 ## Notes
 
 – Watches the clipboard automatically; paste into the panel to inspect without copying.
