@@ -68,6 +68,7 @@ Requires Xcode Command Line Tools and Swift 5.9+.
 – Watches the clipboard automatically; paste into the panel to inspect without copying.
 – Accessibility permission required only for Inspect Selection.
 – Caps inspection at 50,000 Unicode scalars.
+– Detects Cyrillic/Greek/Armenian lookalikes, all Unicode zero-width characters (U+200B–U+200D, U+FEFF), and bidi override/isolate controls (U+202A–U+202E, U+2066–U+2069).
 – No network connection — all analysis is local.
 
 ---
