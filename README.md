@@ -84,6 +84,14 @@ brew uninstall --cask homoglyph-inspector
 
 ---
 
+## Troubleshooting
+
+- **Menu bar icon missing after install:** open the app once from Applications; it is a menu extra (no Dock icon). Check **System Settings → Control Center → Menu Bar Only** if icons are hidden.
+- **Inspect Selection does nothing:** grant Accessibility for Homoglyph Inspector under **System Settings → Privacy & Security → Accessibility**, then quit and reopen the app.
+- **Gatekeeper still blocks after xattr:** use **System Settings → Privacy & Security → Open Anyway**, or reinstall via `brew reinstall --cask homoglyph-inspector`.
+
+---
+
 <div align="center">
 
 Made with ♥ for developers who prefer staying in the flow.
